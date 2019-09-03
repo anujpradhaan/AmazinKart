@@ -32,4 +32,8 @@ public class JsonConverter {
 		return objectMapper.writeValueAsString(data);
 	}
 
+	public <T> T fromJson(String json, Class<T> type) throws IOException {
+		return objectMapper.readValue(json, type);
+	}
+
 }
