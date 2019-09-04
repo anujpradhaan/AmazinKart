@@ -8,7 +8,7 @@ import java.util.List;
  * Created At : {2019-09-04}
  */
 public class DiscountRuleBuilder<DiscountRule> {
-	private List<DiscountRule> discountRuleList;
+	private final List<DiscountRule> discountRuleList;
 
 	public DiscountRuleBuilder() {
 		discountRuleList = new LinkedList<>();

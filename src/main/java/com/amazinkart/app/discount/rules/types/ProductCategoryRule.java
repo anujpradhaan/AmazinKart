@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ProductCategoryRule implements DiscountRule {
 	@Override public Optional<Discount> getDiscount(Product product) {
 		if (PromotionDiscountValidator.isCategoryDiscountedApplicable(product.getCategory(), product.getPrice())) {
-			return Optional.of(new Discount(100.0, "get 100 Flat off"));
+			return Optional.of(new Discount(100.0, String.format(GET_X_TYPE_OFF, "100", "FLAT")));
 		}
 		return Optional.empty();
 	}

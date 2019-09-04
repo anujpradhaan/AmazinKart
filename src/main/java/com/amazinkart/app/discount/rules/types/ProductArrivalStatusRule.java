@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ProductArrivalStatusRule implements DiscountRule {
 	@Override public Optional<Discount> getDiscount(Product product) {
 		if (PromotionDiscountValidator.isProductArrivalDiscountApplicable(product.getArrival())) {
-			return Optional.of(new Discount(0.07 * product.getPrice(), "get 7% off"));
+			return Optional.of(new Discount(0.07 * product.getPrice(), String.format(GET_X_TYPE_OFF, "7", "%")));
 		}
 		return Optional.empty();
 	}

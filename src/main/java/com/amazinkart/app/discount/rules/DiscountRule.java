@@ -10,5 +10,7 @@ import java.util.Optional;
  * Created At : {2019-09-04}
  */
 public interface DiscountRule {
+	String GET_X_TYPE_OFF = "get %s %s off";
 	Optional<Discount> getDiscount(Product product);
+
 }

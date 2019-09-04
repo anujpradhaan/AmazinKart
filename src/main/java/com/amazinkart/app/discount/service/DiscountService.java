@@ -3,24 +3,24 @@ package com.amazinkart.app.discount.service;
 import com.amazinkart.app.discount.rules.DiscountRule;
 import com.amazinkart.app.discount.rules.DiscountRuleBuilder;
 import com.amazinkart.app.discount.rules.PromotionDiscountValidator;
-import com.amazinkart.app.discount.rules.types.AfricanOriginRule;
-import com.amazinkart.app.discount.rules.types.ProductArrivalStatusRule;
-import com.amazinkart.app.discount.rules.types.ProductCategoryRule;
-import com.amazinkart.app.discount.rules.types.ProductInventoryRule;
-import com.amazinkart.app.discount.rules.types.ProductRatingRule;
+import com.amazinkart.app.discount.rules.types.*;
 import com.amazinkart.app.product.Discount;
 import com.amazinkart.app.product.Product;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.amazinkart.app.discount.rules.DiscountRule.GET_X_TYPE_OFF;
+
 /**
  * @author : anuj.kumar
  * Created At : {2019-09-03}
  */
 @Service
+@Slf4j
 public class DiscountService {
 
 	private Map<String, List<DiscountRule>> discountRuleMap;
@@ -50,8 +50,9 @@ public class DiscountService {
 	private Product applyDiscount(Product product, String strategy) {
 		Discount discount = getDiscountAsPerProvidedStrategy(product, strategy)
 				.orElseGet(() -> {
+					log.info("No promotional discount is applicable trying default discount");
 					if (PromotionDiscountValidator.isDefaultDiscountApplicable(product.getPrice())) {
-						return new Discount(0.02 * product.getPrice(), "get 2% off");
+						return new Discount(0.02 * product.getPrice(), String.format(GET_X_TYPE_OFF, "2", "%"));
 					}
 					return null;
 				});
@@ -66,14 +67,14 @@ public class DiscountService {
 	 * @return - returns an Optional of Discount as Discount might or might not be applicable
 	 */
 	private Optional<Discount> getDiscountAsPerProvidedStrategy(Product product, String strategy) {
-		return getDiscountsAsPerStrategy(product, strategy)
+		return getAllValidDiscountsAsPerStrategy(product, strategy)
 				.stream()
 				.max(Comparator.comparingDouble(Discount::getAmount));
 	}
 
-	private List<Discount> getDiscountsAsPerStrategy(Product product, String strategy) {
+	private List<Discount> getAllValidDiscountsAsPerStrategy(Product product, String strategy) {
 		if (!discountRuleMap.containsKey(strategy)) {
-			throw new UnsupportedOperationException("This strategy is not supported");
+			return Collections.emptyList();
 		}
 		return discountRuleMap.get(strategy)
 				.stream()

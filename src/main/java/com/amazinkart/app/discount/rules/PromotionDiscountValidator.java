@@ -18,8 +18,8 @@ public class PromotionDiscountValidator {
 		return "new".equalsIgnoreCase(arrivalStatus);
 	}
 
-	public static boolean isAfricanOrigin(String origin) {
-		return "Africa".equalsIgnoreCase(origin);
+	public static boolean isOriginDiscountApplicable(String origin) {
+		return "africa".equalsIgnoreCase(origin);
 	}
 
 	public static boolean isRatingDiscountApplicable(double rating) {

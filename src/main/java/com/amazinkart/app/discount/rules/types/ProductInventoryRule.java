@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ProductInventoryRule implements DiscountRule {
 	@Override public Optional<Discount> getDiscount(Product product) {
 		if (PromotionDiscountValidator.isInventoryDiscountApplicable(product.getInventory())) {
-			return Optional.of(new Discount(0.12 * product.getPrice(), "get 12% off"));
+			return Optional.of(new Discount(0.12 * product.getPrice(), String.format(GET_X_TYPE_OFF, "12", "%")));
 		}
 		return Optional.empty();
 	}
