@@ -36,5 +36,5 @@ public class AppApplication implements ApplicationRunner {
 		String promotionType = args.getOptionNames().stream().findFirst()
 				.orElse("");
 		log.info("Final Json after applying all the discounts {}", jsonConverter.toJson(productService.getProductsUsingPromotionType(promotionType)));
-	}ss
+	}
 }
