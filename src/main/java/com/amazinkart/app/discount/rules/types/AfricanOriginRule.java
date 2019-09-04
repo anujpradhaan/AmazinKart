@@ -20,8 +20,8 @@ public class AfricanOriginRule implements DiscountRule {
 	 * @return
 	 */
 	@Override public Optional<Discount> getDiscount(Product product) {
-		if (PromotionDiscountValidator.isAfricanOrigin(product.getOrigin())) {
-			return Optional.of(new Discount(0.07 * product.getPrice(), "get 7% off"));
+		if (PromotionDiscountValidator.isOriginDiscountApplicable(product.getOrigin())) {
+			return Optional.of(new Discount(0.07 * product.getPrice(), String.format(GET_X_TYPE_OFF, "7", "%")));
 		}
 		return Optional.empty();
 	}

@@ -28,9 +28,9 @@ public class CurrencyExchangeService {
 		this.restTemplate = restTemplate;
 	}
 
-	public CurrencyRates getCurrencyRatesFromURL(String url) {
-		log.debug("Fetching currency rates from url={}", url);
-		ResponseEntity<CurrencyRates> responseEntity = restTemplate.exchange(url,
+	private CurrencyRates getCurrencyRatesFromURL() {
+		log.debug("Fetching currency rates from url={}", CurrencyExchangeService.CURRENCY_EXCHANGE_URL);
+		ResponseEntity<CurrencyRates> responseEntity = restTemplate.exchange(CurrencyExchangeService.CURRENCY_EXCHANGE_URL,
 				HttpMethod.GET,
 				null,
 				new ParameterizedTypeReference<CurrencyRates>() {
@@ -39,7 +39,7 @@ public class CurrencyExchangeService {
 	}
 
 	public double getINREquivalentForCurrency(String currency, double price) {
-		CurrencyRates currencyRates = getCurrencyRatesFromURL(CURRENCY_EXCHANGE_URL);
+		CurrencyRates currencyRates = getCurrencyRatesFromURL();
 		if ("INR".equalsIgnoreCase(currency)) {
 			return price;
 		}

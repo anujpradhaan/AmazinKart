@@ -8,8 +8,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 
@@ -36,8 +34,7 @@ public class AppApplication implements ApplicationRunner {
 		log.info("Command line arguments: {}", Arrays.toString(args.getSourceArgs()));
 
 		String promotionType = args.getOptionNames().stream().findFirst()
-				.orElseThrow(() -> new UnsupportedOperationException("Not allowed to run without Promotion Type"));
-		log.info("{}", jsonConverter.toJson(productService.getProductsUsingPromotionType(promotionType)));
-	}
-
+				.orElse("");
+		log.info("Final Json after applying all the discounts {}", jsonConverter.toJson(productService.getProductsUsingPromotionType(promotionType)));
+	}ss
 }
