@@ -17,14 +17,17 @@ import java.util.Arrays;
 @Slf4j
 public class AppApplication implements ApplicationRunner {
 
-	@Autowired
-	private ProductService productService;
+	private final ProductService productService;
+
+	private final JsonConverter jsonConverter;
 
 	@Autowired
-	private JsonConverter jsonConverter;
+	public AppApplication(ProductService productService, JsonConverter jsonConverter) {
+		this.productService = productService;
+		this.jsonConverter = jsonConverter;
+	}
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(AppApplication.class, args);
 	}
 
@@ -35,11 +38,6 @@ public class AppApplication implements ApplicationRunner {
 		String promotionType = args.getOptionNames().stream().findFirst()
 				.orElseThrow(() -> new UnsupportedOperationException("Not allowed to run without Promotion Type"));
 		log.info("{}", jsonConverter.toJson(productService.getProductsUsingPromotionType(promotionType)));
-	}
-
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.amazinkart.app.discount;
+package com.amazinkart.app.discount.rules;
 
 /**
  * @author : anuj.kumar

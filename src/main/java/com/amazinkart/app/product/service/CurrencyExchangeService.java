@@ -21,8 +21,12 @@ public class CurrencyExchangeService {
 
 	private static final String CURRENCY_EXCHANGE_URL = "https://api.exchangeratesapi.io/latest";
 
+	private final RestTemplate restTemplate;
+
 	@Autowired
-	private RestTemplate restTemplate;
+	public CurrencyExchangeService(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
 
 	public CurrencyRates getCurrencyRatesFromURL(String url) {
 		log.debug("Fetching currency rates from url={}", url);
