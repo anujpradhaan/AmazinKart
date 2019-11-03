@@ -1,4 +1,4 @@
-# AmazinKart : A Spring boot implementation
+# AmazinKart : A Spring boot implementation, the problem statement is available as a pdf file above. Please check the same before going through the code.
 
 ## Steps to build the running jar
 1. Git Clone the repo
